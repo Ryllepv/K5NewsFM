@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.k5newsfm.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Allow all search engines to index the site
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Disallow crawling of any admin or private areas (if they exist in the future)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.log$
+
+# Allow crawling of CSS and JS files for better rendering
+Allow: /css/
+Allow: /js/
+Allow: /images/

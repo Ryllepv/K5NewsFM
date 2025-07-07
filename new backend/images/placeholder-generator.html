@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Host Image Placeholder Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+        // Generate placeholder images for hosts
+        const hosts = [
+            { name: 'Sarah Johnson', color: '#FF6B6B' },
+            { name: 'Tom Wilson', color: '#4ECDC4' },
+            { name: 'Lisa Chen', color: '#45B7D1' },
+            { name: 'Mark Rodriguez', color: '#96CEB4' },
+            { name: 'Jennifer Davis', color: '#FFEAA7' },
+            { name: 'Alex Thompson', color: '#DDA0DD' }
+        ];
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        hosts.forEach((host, index) => {
+            // Clear canvas
+            ctx.clearRect(0, 0, 400, 400);
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 400, 400);
+            gradient.addColorStop(0, host.color);
+            gradient.addColorStop(1, '#ffffff');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 400);
+            
+            // Add initials
+            const initials = host.name.split(' ').map(n => n[0]).join('');
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 120px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(initials, 200, 200);
+            
+            // Add subtle pattern
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < 20; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * 400, Math.random() * 400, Math.random() * 30, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            // Download image
+            const link = document.createElement('a');
+            link.download = host.name.toLowerCase().replace(' ', '-') + '.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.8);
+            link.click();
+        });
+    </script>
+</body>
+</html>
