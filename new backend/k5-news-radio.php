@@ -370,21 +370,6 @@ $holidays = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             and community stories that matter to Olongapo and surrounding areas. Stay informed, stay connected.
                         </p>
                         
-                        <div class="hero-actions">
-                            <button class="btn btn-danger btn-lg me-3" id="listenLiveBtn">
-                                <i class="bi bi-play-circle-fill me-2"></i>
-                                Listen Live Now
-                            </button>
-                            <button class="btn btn-outline-light btn-lg me-3" data-bs-toggle="modal" data-bs-target="#newsAlertsModal">
-                                <i class="bi bi-bell me-2"></i>
-                                News Alerts
-                            </button>
-                            <button class="btn btn-outline-light btn-lg" id="testStreamBtn">
-                                <i class="bi bi-broadcast me-2"></i>
-                                Test Stream
-                            </button>
-                        </div>
-                        
                         <div class="hero-stats">
                             <div class="stat-item">
                                 <div class="stat-number">24/7</div>
@@ -471,16 +456,16 @@ $holidays = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php endif; ?>
                     </div>
                 </div>
-
-                        <div class="articles-navigation">
-                            <button class="load-more-btn">
-                                <span>Load More Articles</span>
-                                <i class="bi bi-arrow-down"></i>
-                            </button>
-                        </div>
-                    </div>
+                
                 </div>
-
+                <div class="articles-navigation mt-4 mb-5">
+                    <button class="load-more-btn">
+                        <span>Load More Articles</span>
+                        <i class="bi bi-arrow-down"></i>
+                    </button>
+                </div>
+            </div>
+                
                 <div class="col-lg-4">
                     <div class="auto-scroll-images">
                         <div class="scroll-container">
@@ -495,8 +480,134 @@ $holidays = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
+    <div class="section-divider"></div>
+
+    <!-- Featured Live & Video Section -->
+    <section id="listen" class="featured-media-section py-5 bg-dark text-white">
+        <div class="container">
+            <?php 
+            // Get only the first/most recent video at the section level
+            $media = !empty($featuredMedia) ? reset($featuredMedia) : null;
+            ?>
+            <div class="row">
+                <!-- Watch Live Information Column -->
+                <div class="col-lg-5">
+                    <div class="watch-live-heading">
+                        <h2 class="display-5 mb-3 fw-bold">Watch Live</h2>
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="watch-live-divider"></span>
+                            <span class="ms-2 text-danger fw-bold">LIVE BROADCASTING</span>
+                        </div>
+                    </div>
+                    
+                    <p class="lead mb-4 watch-live-description">
+                        <?php echo !empty($media['description']) ? htmlspecialchars($media['description']) : 'Watch K5 News Radio live on 88.7 FM for continuous coverage of breaking news, weather updates, and community stories from Olongapo and Central Luzon.'; ?>
+                    </p>
+                    
+                    <?php if (!empty($media) && !empty($media['url'])): ?>
+                    <!-- Watch Live Button -->
+                    <a href="<?php echo htmlspecialchars($media['url']); ?>" target="_blank" class="btn btn-danger d-block mb-4 py-3 fw-bold watch-live-btn">
+                        <i class="bi bi-play-circle-fill me-2"></i> WATCH LIVE NOW
+                    </a>
+                    <?php endif; ?>
+                    
+                    <!-- FM Radio Info Card -->
+                    <div class="info-card mb-4 p-4">
+                        <div class="d-flex align-items-center">
+                            <div class="me-3 text-center info-card-icon">
+                                <i class="bi bi-broadcast text-danger fs-3"></i>
+                            </div>
+                            <div>
+                                <h3 class="fs-5 mb-1 fw-bold">FM Radio</h3>
+                                <p class="mb-0 text-light fm-station-text">88.7 FM Olongapo</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Video Player Column - Only showing the most recent video -->
+                <div class="col-lg-7">
+                    <?php if (!empty($media)): ?>
+                        <div class="current-stream-header">
+                            <h3 class="text-end mb-2 now-streaming-label">NOW STREAMING</h3>
+                            <h2 class="text-end mb-2 stream-title"><?php echo !empty($media['title']) ? htmlspecialchars($media['title']) : 'Live Broadcast'; ?></h2>
+                            <p class="text-end mb-4 stream-date"><?php echo date('F j, Y'); ?></p>
+                        </div>
+                        
+                        <div class="video-container mb-3 main-video-container">
+                            <?php
+                            // Simple YouTube and Facebook embed preview
+                            if (preg_match('/youtu\.be\/([^\?&]+)/', $media['url'], $yt) || preg_match('/youtube\.com.*v=([^\?&]+)/', $media['url'], $yt)) {
+                                $ytId = $yt[1];
+                                echo '<iframe class="main-video-player" src="https://www.youtube.com/embed/' . htmlspecialchars($ytId) . '" frameborder="0" allowfullscreen></iframe>';
+                            }                            elseif (strpos($media['url'], 'facebook.com') !== false) {
+                                // Direct link to Facebook video instead of embedded player
+                                echo '<div class="placeholder-video d-flex align-items-center justify-content-center">
+                                    <div class="text-center">
+                                        <i class="bi bi-facebook text-danger social-video-icon"></i>
+                                        <h4 class="mt-3">Facebook Video</h4>
+                                        <p class="text-muted">Click to watch on Facebook</p>
+                                        <a href="' . htmlspecialchars($media['url']) . '" target="_blank" class="btn btn-danger mt-2">Watch on Facebook</a>
+                                    </div>
+                                </div>';
+                            } elseif (strpos($media['url'], 'tiktok.com') !== false) {
+                                echo '<div class="social-video-wrapper">';
+                                echo '<blockquote class="tiktok-embed" cite="' . htmlspecialchars($media['url']) . '" data-video-id=""></blockquote>';
+                                echo '</div>';
+                            } else {
+                                // Fallback: just show the link
+                                echo '<div class="placeholder-video d-flex align-items-center justify-content-center">';
+                                echo '<div class="text-center">';
+                                echo '<i class="bi bi-play-circle-fill text-danger social-video-icon"></i>';
+                                echo '<h4 class="mt-3">K5 News Radio Live Stream</h4>';
+                                echo '<p class="text-muted">Click to watch</p>';
+                                echo '<a href="' . htmlspecialchars($media['url']) . '" target="_blank" class="btn btn-danger mt-2">Watch Live</a>';
+                                echo '</div></div>';
+                            }
+                            ?>
+                        </div>
+                        
+                        <!-- Live indicator and viewer count -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="live-badge py-1 px-3 bg-danger rounded-pill">
+                                <span class="live-pulse me-2"></span> 
+                                LIVE
+                            </div>
+                            <div class="text-muted viewer-count">
+                                <i class="bi bi-eye me-1"></i> Streaming now
+                            </div>
+                        </div>
+                        
+
+                        
+
+                        <!-- Description moved to the left column -->
+                        
+                    <?php else: ?>
+                        <div class="current-stream-header">
+                            <h3 class="text-end mb-2">BROADCAST</h3>
+                            <h2 class="text-end mb-2">K5 News Radio</h2>
+                            <p class="text-end mb-4"><?php echo date('F j, Y'); ?></p>
+                        </div>
+                        
+                        <div class="video-container mb-3 no-stream-container">
+                            <div class="placeholder-video d-flex align-items-center justify-content-center">
+                                <div class="text-center">
+                                    <i class="bi bi-broadcast text-danger no-stream-icon"></i>
+                                    <h4 class="mt-3">No Live Stream Available</h4>
+                                    <p class="text-muted">Check back soon for our next broadcast</p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Programs Section -->
-    <section id="programs" class="programs-section py-5">
+    <section id="programs" class="programs-section py-4">
         <div class="container">
             <div class="section-header text-center mb-5">
                 <h2 class="section-title">
@@ -1081,6 +1192,14 @@ $holidays = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Facebook SDK for video embeds -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
+    
+    <!-- TikTok embed script -->
+    <script async src="https://www.tiktok.com/embed.js"></script>
+    
     <!-- Custom JS -->
     <script src="js/k5-news-radio.js"></script>
 </body>

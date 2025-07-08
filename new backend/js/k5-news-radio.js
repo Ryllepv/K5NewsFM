@@ -38,7 +38,7 @@ class K5NewsRadio {
     
     setupEventListeners() {
         // Play/Pause buttons
-        const playButtons = document.querySelectorAll('#listenLiveBtn, #mainPlayBtn, #mainPlayerBtn, .play-btn');
+        const playButtons = document.querySelectorAll('#mainPlayBtn, #mainPlayerBtn, .play-btn');
         playButtons.forEach(btn => {
             btn.addEventListener('click', () => this.togglePlayback());
         });
@@ -61,12 +61,6 @@ class K5NewsRadio {
             alertsForm.addEventListener('submit', (e) => this.handleNewsAlerts(e));
         }
 
-        // Test stream button
-        const testStreamBtn = document.getElementById('testStreamBtn');
-        if (testStreamBtn) {
-            testStreamBtn.addEventListener('click', () => this.testDemoStream());
-        }
-        
         // Navigation scroll effect
         window.addEventListener('scroll', () => this.handleNavbarScroll());
         
@@ -98,7 +92,7 @@ class K5NewsRadio {
     }
     
     updatePlayButtons() {
-        const playButtons = document.querySelectorAll('#listenLiveBtn, #mainPlayBtn, #mainPlayerBtn, .play-btn');
+        const playButtons = document.querySelectorAll('#mainPlayBtn, #mainPlayerBtn, .play-btn');
         playButtons.forEach(btn => {
             const icon = btn.querySelector('i');
             if (icon) {
@@ -211,7 +205,7 @@ class K5NewsRadio {
     }
 
     updatePlayButtonsLoading(isLoading) {
-        const playButtons = document.querySelectorAll('#listenLiveBtn, #mainPlayBtn, #mainPlayerBtn, .play-btn');
+        const playButtons = document.querySelectorAll('#mainPlayBtn, #mainPlayerBtn, .play-btn');
         playButtons.forEach(btn => {
             if (isLoading) {
                 btn.disabled = true;
@@ -544,23 +538,7 @@ class K5NewsRadio {
         });
     }
 
-    testDemoStream() {
-        // Temporarily use demo stream for testing
-        const originalStreamUrl = this.streamUrl;
-        this.streamUrl = this.demoStreamUrl;
 
-        this.showNotification('🎵 Testing with demo stream (SomaFM Groove Salad)', 'info');
-
-        if (!this.isPlaying) {
-            this.togglePlayback();
-        }
-
-        // Restore original stream URL after 30 seconds
-        setTimeout(() => {
-            this.streamUrl = originalStreamUrl;
-            this.showNotification('🔄 Demo test complete. Configure your real stream URL in the JavaScript file.', 'info');
-        }, 30000);
-    }
 }
 
 // Initialize the application when DOM is ready
@@ -606,3 +584,12 @@ notificationStyles.textContent = `
     }
 `;
 document.head.appendChild(notificationStyles);
+
+// Function to handle Facebook video rendering
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof FB !== 'undefined') {
+        setTimeout(function() {
+            FB.XFBML.parse();
+        }, 1000);
+    }
+});

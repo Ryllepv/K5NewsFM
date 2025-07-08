@@ -24,12 +24,6 @@ class ModernK5App {
     }
     
     setupEventListeners() {
-        // Listen Live Button
-        const listenLiveBtn = document.getElementById('listenLiveBtn');
-        if (listenLiveBtn) {
-            listenLiveBtn.addEventListener('click', () => this.togglePlayback());
-        }
-        
         // Play/Pause Button in Player
         const playPauseBtn = document.querySelector('.control-btn.main');
         if (playPauseBtn) {
@@ -96,7 +90,7 @@ class ModernK5App {
     }
     
     updatePlayButton() {
-        const playButtons = document.querySelectorAll('.control-btn.main, #listenLiveBtn');
+        const playButtons = document.querySelectorAll('.control-btn.main');
         playButtons.forEach(btn => {
             const icon = btn.querySelector('i');
             if (icon) {

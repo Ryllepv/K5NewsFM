@@ -235,12 +235,7 @@ h1, h2, h3, h4, h5, h6 {
     color: rgba(255, 255, 255, 0.9);
 }
 
-.hero-actions {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-}
+
 
 .hero-stats {
     display: flex;
@@ -465,7 +460,14 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
 }
 
-
+/* Section divider */
+.section-divider {
+    height: 30px;
+    width: 100%;
+    clear: both;
+    position: relative;
+    z-index: 1;
+}
 
 /* Animations */
 @keyframes fadeInUp {
@@ -522,19 +524,7 @@ h1, h2, h3, h4, h5, h6 {
         line-height: 1.5;
     }
 
-    .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        padding: 0 1rem;
-    }
 
-    .hero-actions .btn {
-        margin: 0;
-        padding: 1rem 1.5rem;
-        font-size: 1rem;
-    }
 
     .hero-stats {
         justify-content: center;
@@ -1265,14 +1255,6 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-
-
-
-
-
-
-
-
 /* Listen Live Section */
 .listen-section {
     padding: var(--section-padding);
@@ -1465,6 +1447,7 @@ h1, h2, h3, h4, h5, h6 {
 .articles-section {
     padding: var(--section-padding);
     background: var(--light-bg);
+    margin-bottom: 3rem;
 }
 
 .articles-container {
@@ -1698,6 +1681,16 @@ h1, h2, h3, h4, h5, h6 {
 .articles-navigation {
     text-align: center;
     margin-top: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Improved Load More Button Styling */
+.articles-navigation {
+    text-align: center;
+    width: 100%;
+    clear: both;
 }
 
 .load-more-btn {
@@ -1712,69 +1705,60 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     transition: var(--transition);
     cursor: pointer;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
 }
 
 .load-more-btn:hover {
-    background: var(--primary-dark);
+    background-color: #c82333;
     transform: translateY(-2px);
-}
-
-.load-more-btn i {
-    transition: var(--transition);
-}
-
-.load-more-btn:hover i {
-    transform: translateY(2px);
+    box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
 }
 
 /* Auto Scroll Images */
 .auto-scroll-images {
-    height: 600px;
-    overflow: hidden;
     position: sticky;
-    top: 2rem;
-    border-radius: var(--border-radius-lg);
+    top: 100px;
+    height: 80vh;
+    overflow: hidden;
+    margin-top: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .scroll-container {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    animation: autoScroll 20s linear infinite;
-    padding: 1rem 0;
+    height: 100%;
+    animation: scrollImages 30s linear infinite;
 }
 
 .scroll-image {
     width: 100%;
     height: auto;
-    aspect-ratio: 16/9;
+    min-height: 300px;
     object-fit: cover;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow-md);
-    transition: var(--transition);
-    cursor: pointer;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
 }
 
-.scroll-image:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-lg);
+@keyframes scrollImages {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(calc(-300px * 2)); }
 }
 
-@keyframes autoScroll {
-    0% {
-        transform: translateY(0);
-    }
-    25% {
-        transform: translateY(-25%);
-    }
-    50% {
-        transform: translateY(-50%);
-    }
-    75% {
-        transform: translateY(-75%);
-    }
-    100% {
-        transform: translateY(0);
+/* Pause animation on hover */
+.scroll-container:hover {
+    animation-play-state: paused;
+}
+
+/* Responsive layout for articles and scroll images */
+@media (max-width: 992px) {
+    .auto-scroll-images {
+        height: 50vh;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
     }
 }
 
@@ -1875,12 +1859,6 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: 2rem;
 }
-
-
-
-
-
-
 
 /* Contact Section */
 .contact-section {
@@ -2207,3 +2185,218 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* CSS styles for new sections have been removed as per the design reversion. */
+
+/* Featured Live & Video Section Styles */
+/* Fix for Facebook video display */
+.facebook-video-container {
+    overflow: hidden;
+}
+.facebook-video-container .fb-video {
+    display: block !important;
+}
+.facebook-video-container .fb-video iframe,
+.facebook-video-container .fb-video span {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 400px !important;
+}
+
+/* Fixed aspect ratio for all video types */
+.video-container {
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    position: relative;
+}
+
+/* Fix for section scrolling with fixed header */
+section[id] {
+    scroll-margin-top: 70px;
+}
+
+/* Animation for live pulse */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Watch Live section styles */
+.featured-media-section {
+    padding-top: 75px; 
+    margin-top: -70px;
+}
+
+/* Watch Live heading styles */
+.watch-live-heading {
+    border-left: 5px solid #dc3545; 
+    padding-left: 15px; 
+    margin-bottom: 25px;
+}
+
+.watch-live-divider {
+    width: 40px; 
+    height: 2px; 
+    background-color: #dc3545; 
+    display: inline-block;
+}
+
+/* Watch Live description */
+.watch-live-description {
+    border-radius: 8px; 
+    padding: 15px; 
+    background-color: rgba(255,255,255,0.05); 
+    font-size: 1.1rem;
+}
+
+/* Watch Live button */
+.watch-live-btn {
+    border-radius: 12px; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 5px 15px rgba(220,53,69,0.3); 
+    border: none;
+}
+
+/* Info card styles */
+.info-card {
+    cursor: pointer; 
+    background-color: rgba(255,255,255,0.08); 
+    border-radius: 12px; 
+    transition: all 0.3s ease; 
+    border-left: 4px solid #dc3545; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.info-card:hover {
+    background-color: rgba(255,255,255,0.12) !important;
+    transform: translateY(-2px);
+}
+
+.info-card-icon {
+    width: 50px; 
+    height: 50px; 
+    background-color: rgba(220,53,69,0.2); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+/* Stream header styles */
+.now-streaming-label {
+    color: #dc3545; 
+    font-weight: 600; 
+    letter-spacing: 1px; 
+    font-size: 1rem; 
+    text-transform: uppercase;
+}
+
+.stream-title {
+    font-size: 2.25rem; 
+    font-weight: 700;
+}
+
+.stream-date {
+    color: #adb5bd;
+}
+
+/* Video container styles */
+.main-video-container {
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5); 
+    position: relative; 
+    height: 500px;
+}
+
+/* Live badge styles */
+.live-badge {
+    font-weight: 600; 
+    font-size: 0.875rem; 
+    display: inline-flex; 
+    align-items: center; 
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+}
+
+.live-pulse {
+    display: inline-block; 
+    width: 10px; 
+    height: 10px; 
+    background-color: #fff; 
+    border-radius: 50%; 
+    animation: pulse 1.5s infinite;
+}
+
+.viewer-count {
+    font-size: 0.9rem; 
+    display: flex; 
+    align-items: center; 
+    background-color: rgba(255,255,255,0.05); 
+    padding: 5px 10px; 
+    border-radius: 4px;
+}
+
+/* Styles for the No Live Stream placeholder */
+.no-stream-container {
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5); 
+    position: relative; 
+    height: 450px;
+}
+
+.placeholder-video {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: #111;
+}
+
+.no-stream-icon {
+    font-size: 4rem;
+}
+
+/* FM station text */
+.fm-station-text {
+    letter-spacing: 0.5px;
+}
+
+/* Main video player iframe */
+.main-video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Social video icons (Facebook, TikTok, etc.) */
+.social-video-icon {
+    font-size: 4rem;
+}
+
+/* Social video embed wrapper */
+.social-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* TikTok embed styling */
+.tiktok-embed {
+    width: 100%;
+    height: 100%;
+}

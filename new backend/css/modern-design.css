@@ -354,12 +354,7 @@ body {
     line-height: 1.7;
 }
 
-.hero-actions {
-    display: flex;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-3xl);
-    flex-wrap: wrap;
-}
+
 
 /* Modern Buttons */
 .btn-primary-modern {
@@ -709,10 +704,7 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hero-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
+
     
     .btn-primary-modern,
     .btn-secondary-modern {

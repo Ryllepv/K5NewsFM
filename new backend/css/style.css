@@ -113,40 +113,7 @@ body {
     }
 }
 
-/* Listen Live Button */
-#listenLiveBtn {
-    font-size: 1.2rem;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-    transition: all 0.3s ease;
-    border: none;
-    position: relative;
-    overflow: hidden;
-}
 
-#listenLiveBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
-}
-
-#listenLiveBtn:active {
-    transform: translateY(0);
-}
-
-#listenLiveBtn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-}
-
-#listenLiveBtn:hover::before {
-    left: 100%;
-}
 
 /* Audio Player */
 .audio-player-container {
@@ -1921,10 +1888,7 @@ section {
         margin-top: 2rem;
     }
 
-    #listenLiveBtn {
-        font-size: 1rem;
-        padding: 12px 30px;
-    }
+
 
     /* Schedule responsive */
     .schedule-item {
@@ -2088,8 +2052,7 @@ button:focus,
 /* Print styles */
 @media print {
     .navbar,
-    .audio-player-container,
-    #listenLiveBtn {
+    .audio-player-container {
         display: none !important;
     }
     
